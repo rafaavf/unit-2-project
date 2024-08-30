@@ -1,5 +1,9 @@
 body{
-    background-image: url('images.jpeg');
+    background: url('/images.jpeg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
     background-color: black;
 }
 h1{
@@ -15,7 +19,7 @@ u{
 
 @font-face {
     font-family: Pixelify_Sans;
-    src: url('The Centurion.ttf');
+    src: url('/The-Centurion.ttf');
 }
 @font-face {
     font-family: SometypeMono;
