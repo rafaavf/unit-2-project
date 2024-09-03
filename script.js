@@ -53,10 +53,7 @@ postCol.forEach(i => {
 
     const date = document.createElement('u');
             date.className = 'dateStyle';
-            date.textContent = 'Posted: ' + i.date.toDate().toString()
-                .replace('GMT-0300 (Brasilia Standard Time)', '')
-                .replace('GMT-0300 (Horário Padrão de Brasília)', '')
-                .replace('GMT-0400 (Horário de Verão do Leste)', '');
+            date.textContent = 'Posted: ' + i.date.toDate().toLocaleDateString("en-US")
 
     const separator = document.createElement('u')
     separator.textContent = '||'
