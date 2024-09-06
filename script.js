@@ -48,8 +48,8 @@ postCol.forEach(i => {
     x = 0;
     i.text.split('</br>').forEach(j => {
         textt['' + x] = document.createElement('u');
-        textt['' + j].className  = 'textStyle';
-        textt['' + j].textContent = j;
+        textt['' + x].className  = 'textStyle';
+        textt['' + x].textContent = j;
         x += 1;
     })
 
