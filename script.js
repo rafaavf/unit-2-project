@@ -70,9 +70,10 @@ postCol.forEach(i => {
     newDiv.appendChild(textDiv);
 
     i.text.split('</br>').forEach(textSegment => {
-    const paragraph = document.createElement('u');  
-    paragraph.className = 'textStyle';
-    paragraph.textContent = textSegment.trim();  
-    textDiv.appendChild(paragraph);  
-});
+        const paragraph = document.createElement('u');  
+        console.log(textSegment)
+        paragraph.className = 'textStyle';
+        paragraph.textContent = textSegment;  
+        textDiv.appendChild(paragraph);  
+    });
 })
