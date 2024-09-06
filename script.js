@@ -44,13 +44,6 @@ postCol.forEach(i => {
     br.textContent = '⁺‧₊˚ ཐི⋆♱⋆ཋྀ ˚₊‧⁺'
     br.className = 'breakStyle'
 
-i.text.split('</br>').forEach(textSegment => {
-    const textElement = document.createElement('u');  // Create a new <u> element for each segment
-    textElement.className = 'textStyle';
-    textElement.textContent = textSegment;  // Assign the segment
-    textDiv.appendChild(textElement);  // Append to the textDiv
-});
-
     const textDiv = document.createElement('div');
     textDiv.className = 'textDiv';
 
@@ -75,5 +68,11 @@ i.text.split('</br>').forEach(textSegment => {
 
     newDiv.appendChild(br);
     newDiv.appendChild(textDiv);
-    textDiv.appendChild(textElement);
+
+    i.text.split('</br>').forEach(textSegment => {
+    const paragraph = document.createElement('u');  
+    paragraph.className = 'textStyle';
+    paragraph.textContent = textSegment.trim();  
+    textDiv.appendChild(paragraph);  
+});
 })
