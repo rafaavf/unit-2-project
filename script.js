@@ -44,14 +44,11 @@ postCol.forEach(i => {
     br.textContent = '⁺‧₊˚ ཐི⋆♱⋆ཋྀ ˚₊‧⁺'
     br.className = 'breakStyle'
 
-    var textt = {};
-    x = 0;
-    i.text.split('</br>').forEach(j => {
-        textt['' + x] = document.createElement('u');
-        textt['' + x].className  = 'textStyle';
-        textt['' + x].textContent = j;
-        x += 1;
-    })
+    i.text.split('</br>').forEach(textSegment => {
+        const textElement = document.createElement('u');
+        textElement.className = 'textStyle';
+        textElement.textContent = textSegment;
+    });
 
     const textDiv = document.createElement('div');
     textDiv.className = 'textDiv';
@@ -77,7 +74,6 @@ postCol.forEach(i => {
 
     newDiv.appendChild(br);
     newDiv.appendChild(textDiv);
-    for (let j=0; j<Object.keys(textt).length; j++){
-        textDiv.appendChild(textt['' + j]);
+    textDiv.appendChild(textElement);
     }
 })
