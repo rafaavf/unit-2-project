@@ -80,5 +80,4 @@ postCol.forEach(i => {
     for (let j=0; j<Object.keys(textt).length; j++){
         textDiv.appendChild(textt['' + j]);
     }
-    }
 })
