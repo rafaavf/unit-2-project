@@ -75,5 +75,4 @@ postCol.forEach(i => {
     newDiv.appendChild(br);
     newDiv.appendChild(textDiv);
     textDiv.appendChild(textElement);
-    }
 })
