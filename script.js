@@ -73,7 +73,8 @@ postCol.forEach(i => {
         const paragraph = document.createElement('p');  
         console.log(textSegment)
         paragraph.className = 'textStyle';
-        paragraph.textContent = textSegment;  
+        paragraph.textContent = textSegment;
+        textDiv.appendChild(document.createElement('br'));
         textDiv.appendChild(paragraph);  
     });
 })
