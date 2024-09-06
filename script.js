@@ -46,7 +46,7 @@ postCol.forEach(i => {
 
     const text = document.createElement('u');
     text.className = 'textStyle';
-    text.textContent = i.text
+    text.textContent = i.text.split('</br>')
 
     const textDiv = document.createElement('div');
     textDiv.className = 'textDiv';
