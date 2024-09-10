@@ -71,7 +71,7 @@ postCol.forEach(i => {
     newDiv.appendChild(br);
     newDiv.appendChild(textDiv);
 
-    x = 0;
+    var x = 0;
     i.text.split('</br>').forEach(textSegment => {
         const paragraph = document.createElement('p');  
         console.log(textSegment)
