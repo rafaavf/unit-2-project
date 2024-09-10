@@ -114,8 +114,5 @@ async function getImagesFromStorageFolder(path) {
         }
 
         return imageUrls; // Returns an array of image URLs
-    } catch (error) {
-        console.error('Error fetching images:', error);
     }
-}
 });
