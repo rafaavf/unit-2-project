@@ -1,5 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js';
 import { getFirestore, collection, getDocs,} from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js';
+import { getStorage, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDpgNLmYYUZF0WleyDSXAb-iyA5VUNgQBo",
@@ -13,6 +14,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage();
 
 const postsSnapshot = await getDocs(collection(db, 'posts'));
 const postCol = postsSnapshot.docs.map(doc => doc.data());
@@ -76,16 +78,18 @@ postCol.forEach(i => {
         paragraph.className = 'textStyle';
         paragraph.textContent = textSegment;
         x != 0
-        ? textDiv.appendChild(document.createElement('br'));
-        : pass
+        ? textDiv.appendChild(document.createElement('br'))
+        : pass;
         textDiv.appendChild(paragraph);  
 
     
     const imageDiv = document.createElement('div');
     imageDiv.className = 'imageDiv';
-    if i.images != null {
+    if i.hasImg {
         newDiv.append(imageDiv);
-        i.images.forEach(image => {
+
+        imagesList = getImagesFromStorageFolder('images/'+i.id)
+        imagesList.forEach(image => {
             const img = document.createElement('img');
             img.src = image;
             img.className = "imageStyle";
@@ -94,3 +98,35 @@ postCol.forEach(i => {
     }
     });
 })
+
+async function getImagesFromStorageFolder(path) {
+    const folderRef = storage.ref(path); 
+
+    try {
+        // Get all items in the folder
+        const result = await folderRef.listAll();
+        const imageUrls = [];
+
+        // Iterate over each item (file) in the folder and get its download URL
+        for (const itemRef of result.items) {
+            const url = await itemRef.getDownloadURL();
+            imageUrls.push(url); // Add the URL to the list
+        }
+
+        return imageUrls; // Returns an array of image URLs
+    } catch (error) {
+        console.error('Error fetching images:', error);
+    }
+}
+
+// Call the function to get and display images
+getImagesFromStorageFolder().then((urls) => {
+    const galeria = document.getElementById('galeria'); // Your HTML div
+    urls.forEach(url => {
+        const img = document.createElement('img');
+        img.src = url;
+        img.style.height = '200px';
+        img.style.margin = '10px';
+        galeria.appendChild(img); // Append images to the div
+    });
+});
