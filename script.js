@@ -102,17 +102,14 @@ postCol.forEach(i => {
 async function getImagesFromStorageFolder(path) {
     const folderRef = ref(path); 
 
-    try {
-        // Get all items in the folder
         const result = await folderRef.listAll();
         const imageUrls = [];
 
-        // Iterate over each item (file) in the folder and get its download URL
-        for (const itemRef of result.items) {
+    for (const itemRef of result.items) {
             const url = await itemRef.getDownloadURL();
-            imageUrls.push(url); // Add the URL to the list
+            imageUrls.push(url); 
         }
 
-        return imageUrls; // Returns an array of image URLs
+        return imageUrls;
     }
 });
