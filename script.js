@@ -85,7 +85,7 @@ postCol.forEach(i => {
     
     const imageDiv = document.createElement('div');
     imageDiv.className = 'imageDiv';
-    if i.hasImg {
+    if i.hasImg === true {
         newDiv.append(imageDiv);
 
         imagesList = getImagesFromStorageFolder('images/'+i.id)
