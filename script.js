@@ -85,7 +85,7 @@ postCol.forEach(i => {
     
     const imageDiv = document.createElement('div');
     imageDiv.className = 'imageDiv';
-    if i.hasImg === true {
+    if (i.hasImg === true) {
         newDiv.append(imageDiv);
 
         imagesList = getImagesFromStorageFolder('images/'+i.id)
@@ -100,7 +100,7 @@ postCol.forEach(i => {
 })
 
 async function getImagesFromStorageFolder(path) {
-    const folderRef = storage.ref(path); 
+    const folderRef = ref(path); 
 
     try {
         // Get all items in the folder
@@ -118,15 +118,4 @@ async function getImagesFromStorageFolder(path) {
         console.error('Error fetching images:', error);
     }
 }
-
-// Call the function to get and display images
-getImagesFromStorageFolder().then((urls) => {
-    const galeria = document.getElementById('galeria'); // Your HTML div
-    urls.forEach(url => {
-        const img = document.createElement('img');
-        img.src = url;
-        img.style.height = '200px';
-        img.style.margin = '10px';
-        galeria.appendChild(img); // Append images to the div
-    });
 });
