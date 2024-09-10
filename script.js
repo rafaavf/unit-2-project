@@ -69,12 +69,28 @@ postCol.forEach(i => {
     newDiv.appendChild(br);
     newDiv.appendChild(textDiv);
 
+    x = 0;
     i.text.split('</br>').forEach(textSegment => {
         const paragraph = document.createElement('p');  
         console.log(textSegment)
         paragraph.className = 'textStyle';
         paragraph.textContent = textSegment;
-        textDiv.appendChild(document.createElement('br'));
+        x != 0
+        ? textDiv.appendChild(document.createElement('br'));
+        : pass
         textDiv.appendChild(paragraph);  
+
+    
+    const imageDiv = document.createElement('div');
+    imageDiv.className = 'imageDiv';
+    if i.images != null {
+        newDiv.append(imageDiv);
+        i.images.forEach(image => {
+            const img = document.createElement('img');
+            img.src = image;
+            img.className = "imageStyle";
+            imageDiv.append(img);
+        })
+    }
     });
 })
