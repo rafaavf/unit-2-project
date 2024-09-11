@@ -1,6 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js';
-import { getFirestore, collection, getDocs,} from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js';
-import { getStorage, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js";
+import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js';
+import { getStorage, getDownloadURL, ref, listAll } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDpgNLmYYUZF0WleyDSXAb-iyA5VUNgQBo",
@@ -19,9 +19,7 @@ const storage = getStorage();
 const postsSnapshot = await getDocs(collection(db, 'posts'));
 const postCol = postsSnapshot.docs.map(doc => doc.data());
 
-console.log(postCol)
-
-postCol.forEach(i => {
+postCol.forEach(async (i) => {
     const postDiv = document.createElement('div');
     postDiv.className = 'postStyle'
 
@@ -50,22 +48,22 @@ postCol.forEach(i => {
     textDiv.className = 'textDiv';
 
     const date = document.createElement('u');
-            date.className = 'dateStyle';
-            date.textContent = 'Posted: ' + i.date.toDate().toLocaleDateString("en-US")
+    date.className = 'dateStyle';
+    date.textContent = 'Posted: ' + i.date.toDate().toLocaleDateString("en-US")
 
-    const separator = document.createElement('u')
-    separator.textContent = '||'
-    separator.className = 'separatorStyle'
+    const separator = document.createElement('u');
+    separator.textContent = '||';
+    separator.className = 'separatorStyle';
 
     document.getElementById('content')
         .appendChild(postDiv)
         .appendChild(newDiv)
         .appendChild(titleDiv)
-        .appendChild(title)
+        .appendChild(title);
 
-    newDiv.appendChild(authorDateDiv)
+    newDiv.appendChild(authorDateDiv);
     authorDateDiv.appendChild(author);
-    authorDateDiv.appendChild(separator)
+    authorDateDiv.appendChild(separator);
     authorDateDiv.appendChild(date);
 
     newDiv.appendChild(br);
@@ -73,42 +71,43 @@ postCol.forEach(i => {
 
     var x = 0;
     i.text.split('</br>').forEach(textSegment => {
-        const paragraph = document.createElement('p');  
-        console.log(textSegment)
+        const paragraph = document.createElement('p');
         paragraph.className = 'textStyle';
         paragraph.textContent = textSegment;
-        x != 0
-        ? textDiv.appendChild(document.createElement('br'))
-        : pass;
-        textDiv.appendChild(paragraph);  
+        x != 0 ? textDiv.appendChild(document.createElement('br')) : null;
+        textDiv.appendChild(paragraph);
+    });
 
-    
-    const imageDiv = document.createElement('div');
-    imageDiv.className = 'imageDiv';
     if (i.hasImg === true) {
+        const imageDiv = document.createElement('div');
+        imageDiv.className = 'imageDiv';
         newDiv.append(imageDiv);
 
-        imagesList = getImagesFromStorageFolder('images/'+i.id)
+        const imagesList = await getImagesFromStorageFolder('images/' + i.id);
         imagesList.forEach(image => {
+            const click = document.createElement('a');
+            click.href = image;
+            click.target = "_blank"
+
             const img = document.createElement('img');
             img.src = image;
-            img.className = "imageStyle";
-            imageDiv.append(img);
-        })
+            img.className = 'imageStyle';
+
+            imageDiv.append(click)
+            click.appendChild(img);
+        });
     }
-    });
-})
+});
 
 async function getImagesFromStorageFolder(path) {
-    const folderRef = ref(path); 
-
-        const result = await folderRef.listAll();
-        const imageUrls = [];
+    const folderRef = ref(storage, path); 
+    const result = await listAll(folderRef);
+    const imageUrls = [];
 
     for (const itemRef of result.items) {
-            const url = await itemRef.getDownloadURL();
-            imageUrls.push(url); 
-        }
-
-        return imageUrls;
+        const url = await getDownloadURL(itemRef);
+        imageUrls.push(url);
     }
+
+    return imageUrls;
+}
